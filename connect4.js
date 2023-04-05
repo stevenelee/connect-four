@@ -15,9 +15,7 @@ let currPlayer = 1; // active player: 1 or 2
 let board = []; // array of rows, each row is array of cells  (board[y][x])
 
 /** makeBoard: create in-JS board structure:
- *    board = array of rows, each row is array of cells  (board[y][x])
- */
-
+ *    board = array of rows, each row is array of cells  (board[y][x])*/
 function makeBoard() {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
   makeGameTop()
@@ -39,6 +37,8 @@ function makeRow(){
   GAME_BOARD.append(row)
 }
 
+/** makes the row above the game board, where players can click to make a move.
+ * takes no input, returns nothing, but appends a row to gameboard*/
 function makeGameTop(){
   let topRow = document.createElement("tr");
   topRow.setAttribute("id", "column-top");
@@ -57,21 +57,6 @@ function makeGameTop(){
 
 /*
 function makeHtmlBoard() {
-  let htmlBoard = document.getElementById('board');
-
-  // TODO: add comment for this code
-  let top = document.createElement("tr");
-  top.setAttribute("id", "column-top");
-  top.addEventListener("click", handleClick);
-
-  // TODO: add comment for this code
-  for (let x = 0; x < WIDTH; x++) {
-    let headCell = document.createElement("td");
-    headCell.setAttribute("id", `top-${x}`);
-    top.append(headCell);
-  }
-  htmlBoard.append(top);
-
   // dynamically creates the main part of html board
   // uses HEIGHT to create table rows
   // uses WIDTH to create table cells for each row
