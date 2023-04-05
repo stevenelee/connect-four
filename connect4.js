@@ -19,6 +19,7 @@ let board = []; // array of rows, each row is array of cells  (board[y][x])
 function makeBoard() {
   for (let y = 0; y < HEIGHT; y++) {
     let row = [];
+    // TODO: look into Array.from method
     for (let x = 0; x < WIDTH; x++) {
       row.push(null);
     }
@@ -28,7 +29,23 @@ function makeBoard() {
 
 /** displays game board in HTML and adds row on top */
 function makeHTMLBoard() {
-  makeGameTop();
+  /** makes the row above the game board, where players can click to make a move.
+ * takes no input, returns nothing, but appends a row to gameboard*/
+  function _makeGameTop() {
+    let topRow = document.createElement("tr");
+    topRow.setAttribute("id", "column-top");
+    topRow.addEventListener("click", handleClick);
+
+    // create row of column tops
+    for (let x = 0; x < WIDTH; x++) {
+      let rowCell = document.createElement("td");
+      rowCell.setAttribute("id", `top-${x}`);
+      topRow.append(rowCell);
+    }
+    GAME_BOARD.append(topRow);
+  }
+  _makeGameTop();
+
   for (let y = 0; y < HEIGHT; y++) {
     let row = document.createElement("tr");
     for (let x = 0; x < WIDTH; x++) {
@@ -40,21 +57,8 @@ function makeHTMLBoard() {
   }
 }
 
-/** makes the row above the game board, where players can click to make a move.
- * takes no input, returns nothing, but appends a row to gameboard*/
-function makeGameTop() {
-  let topRow = document.createElement("tr");
-  topRow.setAttribute("id", "column-top");
-  topRow.addEventListener("click", handleClick);
 
-  // create row of column tops
-  for (let x = 0; x < WIDTH; x++) {
-    let rowCell = document.createElement("td");
-    rowCell.setAttribute("id", `top-${x}`);
-    topRow.append(rowCell);
-  }
-  GAME_BOARD.append(topRow);
-}
+
 
   /** findSpotForCol: given column x, return bottom empty y (null if filled) */
 
