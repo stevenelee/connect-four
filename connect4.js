@@ -71,12 +71,9 @@ function findSpotForCol(x) {
 /** placeInTable: update DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
-  // TODO: make a div and insert into correct table cell
   let piece = document.createElement("div");
   piece.classList.add("piece", `p${currPlayer}`);
   let insertLocation = document.getElementById(`c-${y}-${x}`);
-  console.log("insert location", insertLocation);
-  console.log("coordinates", y, x);
   insertLocation.appendChild(piece);
 }
 
@@ -94,7 +91,6 @@ function handleClick(evt) {
   }
   // get x from ID of clicked cell
   let x = Number(evt.target.id.slice('top-'.length));
-  //console.log("target.id", x)
 
   // get next spot in column (if none, ignore click)
   let y = findSpotForCol(x);
@@ -121,8 +117,7 @@ function handleClick(evt) {
   }
 
   // switch players
-  // TODO: switch currPlayer 1 <-> 2
-  currPlayer === 1 ? currPlayer = 2 : currPlayer = 1;
+  currPlayer = currPlayer === 1 ? 2 : 1;
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -135,17 +130,15 @@ function checkForWin() {
    * currPlayer
    */
   function _win(cells) {
-    // TODO: Check four cells to see if they're all legal & all color of current
-    // player
-    for (let cell of cells){
-      if (cell[0] < 0 || cell[0] >= HEIGHT || cell[1] < 0 || cell[1] >= WIDTH){
-        return false
+    for (let cell of cells) {
+      if (cell[0] < 0 || cell[0] >= HEIGHT || cell[1] < 0 || cell[1] >= WIDTH) {
+        return false;
       }
-      if (board[cell[0]][cell[1]] !== `p${currPlayer}`){
-        return false
+      if (board[cell[0]][cell[1]] !== `p${currPlayer}`) {
+        return false;
       }
     }
-    return true
+    return true;
   }
 
   // using HEIGHT and WIDTH, generate "check list" of coordinates
@@ -153,15 +146,10 @@ function checkForWin() {
   // ways to win: horizontal, vertical, diagonalDR, diagonalDL
   for (let y = 0; y < HEIGHT; y++) {
     for (let x = 0; x < WIDTH; x++) {
-      // TODO: assign values to the below variables for each of the ways to win
-      // horizontal has been assigned for you
-      // each should be an array of 4 cell coordinates:
-      // [ [y, x], [y, x], [y, x], [y, x] ]
-
       let horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
-      let vert = [[y,x], [y+1, x], [y+2, x], [y+3,x]];
-      let diagDL = [[y,x], [y-1, x-1], [y-2, x-2], [y-3, x-3]];
-      let diagDR = [[y,x], [y-1, x+1], [y-2, x+2], [y-3, x+3]];
+      let vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
+      let diagDL = [[y, x], [y - 1, x - 1], [y - 2, x - 2], [y - 3, x - 3]];
+      let diagDR = [[y, x], [y - 1, x + 1], [y - 2, x + 2], [y - 3, x + 3]];
 
       // find winner (only checking each win-possibility as needed)
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
